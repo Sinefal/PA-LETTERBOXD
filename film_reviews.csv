@@ -1,0 +1,21 @@
+film_reviews = {
+    "2020": {
+        "Romance": {
+            "Movie 1": "Ulasan",
+        }
+    }
+    "2022": {
+        "Action": {
+            "Movie A": "Ulasan Movie A",
+            "Movie B": "Ulasan Movie B"
+        },
+        "Comedy": {
+            "Movie C": "Ulasan Movie C"
+        }
+    },
+    "2023": {
+        "Drama": {
+            "Movie D": "Ulasan Movie D"
+        }
+    }
+}
