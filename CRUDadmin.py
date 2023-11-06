@@ -153,7 +153,7 @@ while True:
                 print("(3) Ubah Review Film")
                 print("(4) Hapus Review Film")
                 print("(5) Tambah Judul Film")
-                print("(0) Sign Out")
+                print("(6) Sign Out")
 
                 pilihan = input("Masukkan pilihan: ")
 
@@ -167,7 +167,7 @@ while True:
                     hapus_review_film(username)
                 elif pilihan == "5":
                     tambah_judul_film()
-                elif pilihan == "0":
+                elif pilihan == "6":
                     print("Anda telah keluar.")
                     break
                 else:
