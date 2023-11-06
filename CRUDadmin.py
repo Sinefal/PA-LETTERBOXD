@@ -1,3 +1,5 @@
+import os
+
 cinema = {
     'Interstellar': {
         'review': [
@@ -78,6 +80,7 @@ cinephile = {
 
 # Fungsi untuk menampilkan review film
 def lihat_review_film():
+    film = list(cinema.keys)
     for judul, data_film in cinema.items():
         print(f"Judul: {judul}")
         for review in data_film['review']:
@@ -88,7 +91,8 @@ def lihat_review_film():
 
 # Fungsi untuk memberi review film
 def beri_review_film(username):
-    judul_film = input("Masukkan judul film yang akan direview: ")
+    judul_film = int(input("Masukkan judul film yang akan direview: "))
+    film = list(cinema.keys)[judul_film]
     if judul_film in cinema:
         rating = int(input("Masukkan rating (1-10): "))
         comment = input("Masukkan komentar: ")
@@ -99,7 +103,8 @@ def beri_review_film(username):
 
 # Fungsi untuk mengubah review film
 def ubah_review_film(username):
-    judul_film = input("Masukkan judul film yang reviewnya akan diubah: ")
+    film = list(cinema.keys)
+    judul_film = int(input("Masukkan nomor urut film yang reviewnya akan diubah: "))
     if judul_film in cinema:
         for review in cinema[judul_film]['review']:
             if review['username'] == username:
@@ -141,7 +146,7 @@ def tambah_judul_film():
 while True:
     username = input("Masukkan username: ")
     password = input("Masukkan password: ")
-
+    os.system('cls')
     if username in cinephile and password == cinephile[username]['password']:
         role = cinephile[username]['role']
 
@@ -153,10 +158,10 @@ while True:
                 print("(3) Ubah Review Film")
                 print("(4) Hapus Review Film")
                 print("(5) Tambah Judul Film")
-                print("(6) Sign Out")
+                print("(0) Sign Out")
 
                 pilihan = input("Masukkan pilihan: ")
-
+                os.system('cls')
                 if pilihan == "1":
                     lihat_review_film()
                 elif pilihan == "2":
@@ -167,7 +172,7 @@ while True:
                     hapus_review_film(username)
                 elif pilihan == "5":
                     tambah_judul_film()
-                elif pilihan == "6":
+                elif pilihan == "0":
                     print("Anda telah keluar.")
                     break
                 else:

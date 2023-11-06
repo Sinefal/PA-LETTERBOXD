@@ -63,12 +63,20 @@ cinephile = {
         'password': 'Tarkovsky',
         'role': 'admin'
     },
+    'admin': {
+        'password': 'admin',
+        'role': 'admin'
+    },
     'Ardian': {
         'password': 'ganteng',
         'role': 'user'
     },
     'Maulana': {
         'password': 'hari',
+        'role': 'user'
+    },
+    'user': {
+        'password': 'user',
         'role': 'user'
     }
 }
@@ -103,19 +111,21 @@ def rateFilm(username):
     showList()
     
     try:
-        filmNumber = int(input("Pilih film yang akan di rating (masukkan nomor film): ")) - 1
-        if 0 <= filmNumber < len(cinema):
-            title = list(cinema.keys())[filmNumber]
-            review = cinema[title]['review']
-            for rating in review:
-                if rating['username'] == username:
+        nomor_film = int(input("Pilih nomor film (0 untuk kembali): ")) - 1
+        if nomor_film == -1:
+            return
+        elif 0 <= nomor_film < len(cinema):
+            judul = list(cinema.keys())[nomor_film]
+            ulasan = cinema[judul]['review']
+            for review in ulasan:
+                if review['username'] == username:
                     print("Anda sudah memberi rating untuk film ini.")
                     return
-            rating = int(input("Beri rating (1-10): "))
-            if 1 <= rating <= 10:
-                cinema[title]['review'].append({
+            review = int(input("Beri rating (1-10): "))
+            if 1 <= review <= 10:
+                cinema[judul]['review'].append({
                     'username': username,
-                    'rating': rating
+                    'rating': review
                 })
                 print("Rating berhasil diberikan.")
             else:
@@ -134,19 +144,20 @@ def showRating():
     showList()
 
     try:
-        filmNumber = int(input("Pilih film untuk melihat rating (masukkan nomor film): ")) - 1
-        if 0 <= filmNumber < len(cinema):
-            title = list(cinema.keys())[filmNumber]
-            review = cinema[title]['review']
-            if review:
-                print(f"Rating untuk film '{title}':")
-                for rating in review:
-                    print(f"From: {rating['username']}")
-                    print(f"Rating: {rating['rating']}")
-                    print(f"Comment: {rating['comment']}")
+        nomor_film = int(input("Pilih nomor film: ")) - 1
+        if 0 <= nomor_film < len(cinema):
+            judul_film = list(cinema.keys())[nomor_film]
+            ulasan = cinema[judul_film]['review']
+            if ulasan:
+                print(f"Review untuk film '{judul_film}':")
+                print("--------------------------------------------------------")
+                for review in ulasan:
+                    print(f"From: {review['username']}")
+                    print(f"Rating: {review['rating']}")
+                    print(f"Comment: {review['comment']}")
                     print()
             else:
-                print("Belum ada rating untuk film ini.")
+                print("Belum ada review untuk film ini.")
         else:
             print("Film tidak ditemukan.")
     except ValueError:
@@ -210,7 +221,7 @@ def deleteRating(username):
 
 
 # Fungsi untuk role admin
-def is_admin(username):
+def admin(username):
     if username in cinephile:
         return cinephile[username]['role'] == 'admin'
     return False
@@ -233,24 +244,11 @@ def register():
             print("Username sudah digunakan. Coba lagi.")
         else:
             break
-
     password = input("Masukkan password baru: ")
-
-    while True:
-        user_role = input("Pilih role sebagai admin (A) atau user (U): ")
-        if user_role.lower() == 'a':
-            role = 'admin'
-            break
-        elif user_role.lower() == 'u':
-            role = 'user'
-            break
-        else:
-            print("Pilihan tidak valid. Harap pilih 'A' untuk admin atau 'U' untuk user.")
-
     print("Akun berhasil dibuat.")
     cinephile[username] = {
         'password': password,
-        'role': role
+        'role': 'user'
     }
     return username
 
@@ -287,7 +285,7 @@ def main():
                 choice = input("Pilihan Anda: ")
 
                 if choice == '1':
-                    if is_admin(username):
+                    if admin(username):
                         addFilm()
                     else:
                         print("Anda tidak memiliki izin untuk menambahkan film.")
@@ -303,6 +301,6 @@ def main():
                     break
                 else:
                     print("Pilihan tidak valid.")
-
+ 
 if __name__ == "__main__":
     main()
