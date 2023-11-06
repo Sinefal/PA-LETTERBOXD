@@ -104,7 +104,9 @@ def rateFilm(username):
     
     try:
         filmNumber = int(input("Pilih film yang akan di rating (masukkan nomor film): ")) - 1
-        if 0 <= filmNumber < len(cinema):
+        if filmNumber == -1:
+            return
+        elif 0 <= filmNumber < len(cinema):
             title = list(cinema.keys())[filmNumber]
             review = cinema[title]['review']
             for rating in review:

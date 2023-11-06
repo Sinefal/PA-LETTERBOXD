@@ -78,16 +78,28 @@ cinephile = {
     }
 }
 
+def showList():
+    if not cinema:
+        print("Tidak ada film di dalam daftar.")
+        return
+
+    for i, film in enumerate(cinema):
+        print(f"{i + 1}. {film}")
+
 # Fungsi untuk menampilkan review film
 def lihat_review_film():
-    film = list(cinema.keys)
-    for judul, data_film in cinema.items():
-        print(f"Judul: {judul}")
-        for review in data_film['review']:
-            print(f"Rating: {review['rating']}")
-            print(f"Komentar: {review['comment']}")
-            print(f"Username: {review['username']}")
-            print("---------------")
+    showList()
+    nomor_film = int(input("Pilih nomor film: ")) - 1
+    if 0 <= nomor_film < len(cinema):
+        judul_film = list(cinema.keys())[nomor_film]
+        ulasan = cinema[judul_film]['review']
+        for judul, data_film in cinema.items():
+            print(f"Judul: {judul}")
+            for ulasan in data_film['review']:
+                print(f"Rating: {ulasan['rating']}")
+                print(f"Komentar: {ulasan['comment']}")
+                print(f"Username: {ulasan['username']}")
+                print("---------------")
 
 # Fungsi untuk memberi review film
 def beri_review_film(username):
