@@ -90,60 +90,39 @@ def showList():
 def lihat_review_film():
     showList()
     nomor_film = int(input("Pilih nomor film: ")) - 1
+    os.system('cls')
     if 0 <= nomor_film < len(cinema):
         judul_film = list(cinema.keys())[nomor_film]
         ulasan = cinema[judul_film]['review']
-        for judul, data_film in cinema.items():
-            print(f"Judul: {judul}")
-            for ulasan in data_film['review']:
-                print(f"Rating: {ulasan['rating']}")
-                print(f"Komentar: {ulasan['comment']}")
-                print(f"Username: {ulasan['username']}")
+        if ulasan:
+            print(f"Review untuk film '{judul_film}':")
+            print("--------------------------------------------------------")
+            for review in ulasan:
+                print(f"Rating: {review['rating']}")
+                print(f"Komentar: {review['comment']}")
+                print(f"Username: {review['username']}")
                 print("---------------")
-
-# Fungsi untuk memberi review film
-def beri_review_film(username):
-    judul_film = int(input("Masukkan judul film yang akan direview: "))
-    film = list(cinema.keys)[judul_film]
-    if judul_film in cinema:
-        rating = int(input("Masukkan rating (1-10): "))
-        comment = input("Masukkan komentar: ")
-        cinema[judul_film]['review'].append({'username': username, 'rating': rating, 'comment': comment})
-        print("Review film telah ditambahkan!")
-    else:
-        print("Judul film tidak ditemukan.")
-
-# Fungsi untuk mengubah review film
-def ubah_review_film(username):
-    film = list(cinema.keys)
-    judul_film = int(input("Masukkan nomor urut film yang reviewnya akan diubah: "))
-    if judul_film in cinema:
-        for review in cinema[judul_film]['review']:
-            if review['username'] == username:
-                new_rating = int(input("Masukkan rating baru (1-10): "))
-                new_comment = input("Masukkan komentar baru: ")
-                review['rating'] = new_rating
-                review['comment'] = new_comment
-                print("Review film telah diubah!")
-                break
-        else:
-            print("Anda belum memberikan review untuk film ini.")
-    else:
-        print("Judul film tidak ditemukan.")
 
 # Fungsi untuk menghapus review film
 def hapus_review_film(username):
-    judul_film = input("Masukkan judul film yang reviewnya akan dihapus: ")
-    if judul_film in cinema:
-        for review in cinema[judul_film]['review']:
-            if review['username'] == username:
-                cinema[judul_film]['review'].remove(review)
-                print("Review film telah dihapus!")
-                break
+    showList()
+    nomor_film = int(input("Pilih nomor film: ")) -1
+    os.system('cls')
+    if 0 <= nomor_film < len(cinema):
+        judul_film = list(cinema.keys())[nomor_film]
+        ulasan = cinema[judul_film]['review']
+        print("\nUlasan untuk film", judul_film, ":")
+        for i, review in enumerate(ulasan):
+            print(f"{i + 1}. Username: {review['username']}, Rating: {review['rating']}, Komentar: {review['comment']}")
+        nomor_ulasan = int(input("Pilih nomor ulasan yang akan dihapus: ")) - 1
+        os.system('cls')
+        if 0 <= nomor_ulasan < len(ulasan):
+            del ulasan[nomor_ulasan]
+            print("Ulasan film telah dihapus!")
         else:
-            print("Anda belum memberikan review untuk film ini.")
+            print("Nomor ulasan tidak valid.")
     else:
-        print("Judul film tidak ditemukan.")
+        print("Nomor film tidak valid.")
 
 # Fungsi untuk menambahkan judul film
 def tambah_judul_film():
@@ -153,6 +132,29 @@ def tambah_judul_film():
         print("Judul film telah ditambahkan!")
     else:
         print("Judul film sudah ada dalam daftar.")
+
+def ubah_judul_film():
+    showList()
+    nomor_film = int(input("Pilih nomor film yang akan diubah: ")) - 1
+    os.system('cls')
+    if 0 <= nomor_film < len(cinema):
+        judul_film = list(cinema.keys())[nomor_film]
+        new_judul_film = input("Masukkan judul film baru: ")
+        cinema[new_judul_film] = cinema.pop(judul_film)
+        print("Judul film telah diubah!")
+    else:
+        print("Nomor film tidak valid.")
+
+def hapus_judul_film():
+    showList()
+    nomor_film = int(input("Pilih nomor film yang akan dihapus: ")) - 1
+    os.system('cls')
+    if 0 <= nomor_film < len(cinema):
+        judul_film = list(cinema.keys())[nomor_film]
+        del cinema[judul_film]
+        print("Judul film telah dihapus!")
+    else:
+        print("Nomor film tidak valid.")
 
 # Menu utama
 while True:
@@ -166,10 +168,10 @@ while True:
             while True:
                 print("\nMenu Admin")
                 print("(1) Lihat Review Film")
-                print("(2) Beri Review Film")
-                print("(3) Ubah Review Film")
-                print("(4) Hapus Review Film")
-                print("(5) Tambah Judul Film")
+                print("(2) Hapus Review Film")
+                print("(3) Tambah Judul Film")
+                print("(4) Ubah Judul Film")
+                print("(5) hapus Judul Film")
                 print("(0) Sign Out")
 
                 pilihan = input("Masukkan pilihan: ")
@@ -177,13 +179,13 @@ while True:
                 if pilihan == "1":
                     lihat_review_film()
                 elif pilihan == "2":
-                    beri_review_film(username)
-                elif pilihan == "3":
-                    ubah_review_film(username)
-                elif pilihan == "4":
                     hapus_review_film(username)
-                elif pilihan == "5":
+                elif pilihan == "3":
                     tambah_judul_film()
+                elif pilihan == "4":
+                    ubah_judul_film()
+                elif pilihan == "5":
+                    hapus_judul_film()
                 elif pilihan == "0":
                     print("Anda telah keluar.")
                     break
