@@ -136,7 +136,7 @@ def lihat_review_film():
         print("Input tidak valid.")
         return lihat_review_film()
     
-#Fungsi untuk menampilkan review film
+# Fungsi untuk menampilkan review film
 def lihat_review_film_user(username):
     showList()
     try:
@@ -155,12 +155,7 @@ def lihat_review_film_user(username):
                     print(f"Rating: {review['rating']}")
                     print(f"Comment: {review['comment']}")
                     print()
-                    # while True:
-                    #     konfirmasi = input("Tekan 0 untuk kembali ke menu: ")
-                    #     if konfirmasi == "0":
-                    #         return menu_user(username)
-                    #     else :
-                    #         print("Tidak valid!")
+                    return menu_user(username)
             else:
                 print("Tidak ada review untuk film ini.")
                 return menu_user(username)
@@ -451,7 +446,7 @@ def menu_user(username):
         pilih_user=int(input("Pilih menu : "))
         os.system('cls')
         if pilih_user == 1 :
-            lihat_review_film(username)
+            lihat_review_film()
         elif pilih_user == 2 :
             beri_review(username)
         elif pilih_user == 3 :
