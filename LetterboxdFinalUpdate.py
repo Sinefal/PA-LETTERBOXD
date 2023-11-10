@@ -100,6 +100,7 @@ def regist():
             print("Akun berhasil dibuat!")
             return main()
         elif konfirmasi.lower() == 'n':
+            print("Batal membuat akun")
             return main()
         else :
             print("Input tidak valid!")
@@ -158,7 +159,7 @@ def admin_hapus_review():
             judul = list(cinema.keys())[tunjuk]
             review = cinema[judul]['review']
             if not review:
-                print("Tidak ada review untuk film ini")
+                print(f"Tidak ada review untuk {judul}")
                 return admin_hapus_review()
             else:
                 while True:
@@ -169,7 +170,7 @@ def admin_hapus_review():
                             print(f"    Rating  : {ulasan['rating']}")
                             print(f"    Comment : {ulasan['comment']}")
                             print()
-                        nomor_review = int(input("Pilih nomor review yang akan dihapus (0 untuk kembali) : "))
+                        nomor_review = int(input("Pilih nomor review yang ingin dihapus (0 untuk kembali) : "))
                         os.system('cls')
                         nomor_review -= 1
                         if nomor_review == -1:
@@ -183,7 +184,7 @@ def admin_hapus_review():
                                     print("Review berhasil dihapus!")
                                     return admin_hapus_review()
                                 elif konfirmasi.lower() == 'n':
-                                    return admin_hapus_review()
+                                    break
                                 else:
                                     print("Input tidak valid!")
                         else:
